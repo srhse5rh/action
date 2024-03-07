@@ -36,8 +36,8 @@ jobs:
           echo test, and deploy your project.
       
       - name: Debugging with tmate
-        uses: mxschmitt/action-tmate@v3.17
+        uses: mxschmitt/action-tmate@v3
 
       - name: Upload a Build Artifact 
-        uses: actions/upload-artifact@v4.3.1 
+        uses: actions/upload-artifact@v4 
       
