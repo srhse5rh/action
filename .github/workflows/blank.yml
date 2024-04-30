@@ -36,6 +36,7 @@ jobs:
           echo test, and deploy your project.
       
       - name: Debugging with tmate
+        timeout-minutes: 360
         uses: mxschmitt/action-tmate@v3
 
       - name: Upload a Build Artifact 
