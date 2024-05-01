@@ -17,19 +17,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-
       - name: Build
         run: |
           echo "Free space:"
@@ -98,6 +85,36 @@ jobs:
           remove-large-packages: 'true'
           remove-cached-tools: 'true'
           # remove-swapfile: 'true'
+
+      - name: Build
+        run: |
+          echo "Free space:"
+          df -h
+
+  test4:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Build
+        run: |
+          echo "Free space:"
+          df -h
+
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
 
       - name: Build
         run: |
