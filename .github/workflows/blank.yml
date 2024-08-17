@@ -37,7 +37,6 @@ jobs:
           echo test, and deploy your project.
       
       - name: Debugging with tmate
-        permissions: write-all
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
