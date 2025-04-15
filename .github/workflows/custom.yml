@@ -53,12 +53,14 @@ jobs:
 
       - name: Install Tailscale (macOS)
         if: runner.os == 'macOS'
-        run: brew install tailscale
+        run: |
+          brew install tailscale
+          sudo tailscaled install-system-daemon
         
 
       - name: Start Tailscale (macOS)
         if: runner.os == 'macOS'
-        run: sudo tailscale up --authkey=${{ inputs.TS_AUTHKEY }}
+        run: sudo tailscale up --authkey=${{ inputs.TS_AUTHKEY }} --ssh
         
 
 
