@@ -33,7 +33,7 @@ jobs:
       - name: Wait for connection (30 minutes)
         # shell: pwsh
         run: |
-          tailscale up --ssh
+          tailscale up --ssh --auth-key ${{ github.event.inputs.ts_authkey }}
           sleep 1800
 
       - name: Upload workspace directory
