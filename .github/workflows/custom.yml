@@ -44,10 +44,12 @@ jobs:
         shell: pwsh 
 
       - name: Setup RDP (Windows)
-        run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
-      - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-      - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0
-      - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "1234567890@Aa" -Force)
+        if: runner.os == 'Windows'
+        run: |
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+          Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0
+          Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "1234567890@Aa" -Force)
 
       - name: Install Tailscale (macOS)
         if: runner.os == 'macOS'
