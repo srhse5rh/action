@@ -1,0 +1,39 @@
+name: Debug Build Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner_os:
+        description: 'Runner OS (e.g., ubuntu-latest, macos-latest, windows-latest)'
+        required: false
+        default: 'ubuntu-latest'
+        type: string
+      ts_authkey:
+        description: 'Tailscale Auth Key (tskey-auth-...). CAUTION: Using inputs is less secure than secrets.'
+        required: true # Make it required as it's essential for connection
+        type: string
+
+
+jobs:
+  debug:
+    runs-on: ${{ github.event.inputs.runner_os }}
+    # timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          authkey: ${{ github.event.inputs.ts_authkey }}
+
+      - name: Wait for connection (30 minutes)
+        shell: pwsh
+        run: sleep 1800
+
+      - name: Upload workspace directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace-${{ github.run_id }}
+          path: .
