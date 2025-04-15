@@ -31,8 +31,10 @@ jobs:
           authkey: ${{ github.event.inputs.ts_authkey }}
 
       - name: Wait for connection (30 minutes)
-        shell: pwsh
-        run: sleep 1800
+        # shell: pwsh
+        run: |
+          tailscale up --ssh
+          sleep 1800
 
       - name: Upload workspace directory
         uses: actions/upload-artifact@v4
