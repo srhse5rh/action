@@ -56,23 +56,6 @@ jobs:
 
       - name: Keep runner alive (30 minutes)
         run: |
-          echo "Runner is ready. Starting 30-minute wait loop."
-          echo "Connect via Tailscale within 30 minutes."
-          echo "Tailscale IP address(es):"
-          
-          if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
-            tailscale ip -4 || echo "Could not get Tailscale IPv4"
-            tailscale ip -6 || echo "Could not get Tailscale IPv6"
-            echo "Process ID to potentially pause/kill: $$"
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            & "C:\Program Files\Tailscale\tailscale.exe" ip -4 | Out-Host || Write-Host "Could not get Tailscale IPv4"
-            & "C:\Program Files\Tailscale\tailscale.exe" ip -6 | Out-Host || Write-Host "Could not get Tailscale IPv6"
-            Write-Host "Process ID to potentially pause/kill: $pid"
-          fi
-          echo "--------------------------------------------------"
-          echo "To extend time: Connect via SSH/RDP and pause/kill the sleep process."
-          echo "Example (Linux/macOS): Find PID above, then 'kill -STOP <PID>' to pause, 'kill -CONT <PID>' to resume, or 'kill <PID>' to end wait early."
-          echo "Example (Windows): Find PID in Task Manager, suspend or terminate the 'sleep' or 'Start-Sleep' process."
           sleep 1800 
           echo "Wait finished or was interrupted."
         shell: bash 
