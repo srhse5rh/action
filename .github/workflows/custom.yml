@@ -20,6 +20,8 @@ jobs:
     # timeout-minutes: 45
 
     steps:
+      - uses: levibostian/action-hide-sensitive-inputs@v1
+    
       - name: Checkout repository
         uses: actions/checkout@v4
 
