@@ -33,7 +33,7 @@ jobs:
       - name: Wait for connection (30 minutes)
         # shell: pwsh
         run: |
-          tailscale up --ssh --reset
+          sudo tailscale up --ssh --reset
           sleep 1800
 
       - name: Upload workspace directory
