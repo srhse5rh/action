@@ -41,13 +41,13 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - run: sudo apt-get -y install tmate
       
       - name: Debugging with tmate
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          sudo apt-get -y install tmate
-          tmate -F new-session bash
+        run: tmate -F new-session bash
 
       - name: Upload a Build Artifact 
         uses: actions/upload-artifact@v4
