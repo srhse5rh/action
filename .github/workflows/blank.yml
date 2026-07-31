@@ -9,7 +9,7 @@ on:
         type: string
 
 env:
-  UPLOAD_ARTIFACT: true
+  UPLOAD_ARTIFACT: false
 
 jobs:
   build:
