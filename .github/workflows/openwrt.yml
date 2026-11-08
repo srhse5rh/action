@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start tailcat
-        run: docker run --name tailcat --network host ghcr.io/tailscale/tailcat serve no-auth-ssh
+        run: docker run --name tailcat --network host ghcr.io/tailscale/tailcat serve all
 
       - name: Build image
         env:
