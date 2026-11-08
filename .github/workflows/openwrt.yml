@@ -1,0 +1,36 @@
+name: build-openwrt
+
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 额外软件包（空格分隔）
+        default: kmod-inet-diag kmod-nft-queue podman fuse-overlayfs lxc-create lxc-templates lxc-destroy lxc-stop lxc-start lxc-autostart mount-utils lxc-execute ip-full curl procps-ng-ps procps-ng-free ss owut
+      profile:
+        description: 设备 PROFILE
+        default: rpi-4
+  workflow_call:
+    inputs:
+      packages:
+        type: string
+        default: kmod-inet-diag kmod-nft-queue podman fuse-overlayfs lxc-create lxc-templates lxc-destroy lxc-stop lxc-start lxc-autostart mount-utils lxc-execute ip-full curl procps-ng-ps procps-ng-free ss owut
+      profile:
+        type: string
+        default: rpi-4
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/openwrt/imagebuilder:bcm27xx-bcm2711-25.12-SNAPSHOT
+    steps:
+      - name: Build image
+        working-directory: /builder
+        env:
+          PROFILE: ${{ inputs.profile }}
+          PACKAGES: ${{ inputs.packages }}
+        run: make image PROFILE="$PROFILE" PACKAGES="$PACKAGES"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openwrt-${{ inputs.profile }}
+          path: /builder/bin/targets/bcm27xx/bcm2711/*
