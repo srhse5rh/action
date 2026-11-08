@@ -16,8 +16,9 @@ jobs:
     steps:
       - name: Start tailcat
         run: |
-          echo -e "123\n123" | passwd runner
-          docker run --name tailcat --network host ghcr.io/tailscale/tailcat serve all
+          docker pull ghcr.io/tailscale/tailcat
+          docker cp ghcr.io/tailscale/tailcat:/usr/local/bin/tailcat ./tailcat
+          ./tailcat serve no-auth-ssh
 
       - name: Build image
         env:
