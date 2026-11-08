@@ -19,10 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          sudo apt-get -y install tmate
+          tmate -F new-session bash
 
       - name: Upload Artifact
         if: env.UPLOAD_ARTIFACT == 'true'
