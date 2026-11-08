@@ -9,14 +9,6 @@ on:
       profile:
         description: 设备 PROFILE
         default: rpi-4
-  workflow_call:
-    inputs:
-      packages:
-        type: string
-        default: kmod-inet-diag kmod-nft-queue podman fuse-overlayfs lxc-create lxc-templates lxc-destroy lxc-stop lxc-start lxc-autostart mount-utils lxc-execute ip-full curl procps-ng-ps procps-ng-free ss owut
-      profile:
-        type: string
-        default: rpi-4
 
 jobs:
   build:
