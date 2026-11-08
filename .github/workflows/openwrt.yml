@@ -13,16 +13,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/openwrt/imagebuilder:bcm27xx-bcm2711-25.12-SNAPSHOT
     steps:
+      - name: Start tailcat
+        run: docker run -d --name tailcat --network host ghcr.io/tailscale/tailcat serve ssh
+
       - name: Build image
-        working-directory: /builder
         env:
           PROFILE: ${{ inputs.profile }}
           PACKAGES: ${{ inputs.packages }}
-        run: make image PROFILE="$PROFILE" PACKAGES="$PACKAGES"
+        run: |
+          mkdir -p bin
+          docker run --rm --user root -v "$PWD/bin:/builder/bin" \
+            ghcr.io/openwrt/imagebuilder:bcm27xx-bcm2711-25.12-SNAPSHOT \
+            make image PROFILE="$PROFILE" PACKAGES="$PACKAGES"
 
       - uses: actions/upload-artifact@v4
         with:
           name: openwrt-${{ inputs.profile }}
-          path: /builder/bin/targets/bcm27xx/bcm2711/*
+          path: bin/targets/bcm27xx/bcm2711/*
